@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>音乐播放器 - 个人网站</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/audio.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">主页</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">首页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="works.html">作品展示</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="honors.html">成就荣誉</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="about.html">个人简介</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="skills.html">技能特长</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">联系方式</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="music.html">音乐播放器</a>
+                </li>
+            </ul>
+            <form class="form-inline search-form">
+                <div class="input-group">
+                    <input type="search" class="form-control search-input" placeholder="搜索作品..." aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-light" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<main class="container mt-5 pt-5">
+    <section class="jumbotron text-center bg-light mb-5">
+        <div class="container">
+            <h1 class="display-4">音乐播放器</h1>
+            <p class="lead">聆听我喜爱的音乐，感受音乐的魅力</p>
+        </div>
+    </section>
+
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8">
+            <div class="music-player card">
+                <div class="album-cover" id="albumCover">
+                    <img src="https://p2.music.126.net/yN1ke1xYMJ718FiHaDWtYQ==/109951165076380471.jpg?param=300y300"
+                         alt="专辑封面" id="coverImage" class="card-img-top">
+                </div>
+
+                <div class="player-controls">
+                    <!-- 进度条 -->
+                    <div class="progress" id="progressContainer">
+                        <div class="progress-bar bg-primary" id="progressBar" role="progressbar" style="width: 0%"></div>
+                    </div>
+
+                    <!-- 控制按钮 -->
+                    <div class="control-buttons">
+                        <button title="循环播放" class="btn-repeat">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                        <button title="上一曲" class="btn-prev">
+                            <i class="fas fa-step-backward"></i>
+                        </button>
+                        <button title="播放" class="btn btn-primary play-pause-btn" id="playPauseBtn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button title="下一曲" class="btn-next">
+                            <i class="fas fa-step-forward"></i>
+                        </button>
+                        <button title="随机播放" class="btn-shuffle">
+                            <i class="fas fa-random"></i>
+                        </button>
+                    </div>
+
+                    <!-- 歌曲信息 -->
+                    <div class="song-info">
+                        <div class="song-title" id="songTitle">陪你度过漫长岁月</div>
+                        <div class="song-artist" id="songArtist">王杰</div>
+                    </div>
+
+                    <!-- 音量控制 -->
+                    <div class="volume-container">
+                        <i class="fas fa-volume-up"></i>
+                        <input type="range" class="custom-range volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+                    </div>
+
+                    <!-- 显示/隐藏歌词按钮 -->
+                    <div class="toggle-lyrics mt-2" id="toggleLyrics">
+                        显示歌词 <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+
+                <!-- 歌词区域 -->
+                <div class="lyrics-container" id="lyricsContainer">
+                    <p>我没转身</p>
+                    <p>一直走一直梦</p>
+                    <p>一直疯一直没停留</p>
+                    <p>那些美好的</p>
+                    <p>越靠近越沉溺</p>
+                    <p>越来越不想放手</p>
+                    <p>越来越不想放手</p>
+                    <p>Wherever you go</p>
+                    <p>Wherever you go</p>
+                </div>
+
+                <audio id="audioPlayer">
+                    <source src="https://music.163.com/song/media/outer/url?id=1456890009.mp3" type="audio/mpeg" id="audioSource">
+                </audio>
+            </div>
+        </div>
+    </div>
+
+    <section class="mb-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">歌曲列表</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group" id="songList">
+                    <button class="list-group-item list-group-item-action active" data-id="1456890009" data-title="陪你度过漫长岁月" data-artist="王杰" data-cover="https://p2.music.126.net/yN1ke1xYMJ718FiHaDWtYQ==/109951165076380471.jpg?param=300y300">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">陪你度过漫长岁月</h5>
+                            <small>王杰</small>
+                        </div>
+                    </button>
+                    <button class="list-group-item list-group-item-action" data-id="1376142151" data-title="像我这样的人" data-artist="毛不易" data-cover="https://p2.music.126.net/vmCcDvD1H04e9gm97xsCqg==/109951163350929740.jpg?param=300y300">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">像我这样的人</h5>
+                            <small>毛不易</small>
+                        </div>
+                    </button>
+                    <button class="list-group-item list-group-item-action" data-id="1934251776" data-title="起风了" data-artist="买辣椒也用券" data-cover="https://p1.music.126.net/diGAyEmpymX8G7JcnElncQ==/109951163699673355.jpg?param=300y300">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">起风了</h5>
+                            <small>买辣椒也用券</small>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/audio.js"></script>
+
+</body>
+
+</html>

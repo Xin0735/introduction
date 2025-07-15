@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>视频播放器</title>
+  <link rel="stylesheet" href="fonts/font-awesome.css" />
+  <link rel="stylesheet" href="css/video.css" />
+</head>
+
+<body>
+<figure>
+  <figcaption>视频播放器</figcaption>
+  <div class="player">
+    <video src="video/keypoints-video.mp4"></video>
+    <div class="controls">
+      <a href="javascript:;" class="switch fa fa-play"></a>
+      <div class="progress">
+        <div class="line"></div>
+        <div class="bar"></div>
+      </div>
+      <div class="timer">
+        <span class="current">00:00:00</span> / <span class="total">00:00:00</span>
+      </div>
+      <a href="javascript:;" class="expand fa fa-arrows-alt"></a>
+    </div>
+  </div>
+</figure>
+<script src="js/jquery.min.js"></script>
+<script src="js/video.js"></script>
+</body>
+
+</html>

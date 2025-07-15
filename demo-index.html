@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>个人作品与成就展示 - 首页</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow-x: hidden;
+            background: transparent;
+        }
+
+        /* 星空背景画布样式 */
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* 内容层样式 */
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 导航栏样式调整 */
+        .navbar {
+            background: rgba(0, 123, 255, 0.3) !important;
+            backdrop-filter: blur(5px);
+        }
+
+        /* 卡片样式调整 */
+        .card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: white;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 欢迎区域样式调整 */
+        .jumbotron {
+            background: transparent !important; /* 移除背景色 */
+            backdrop-filter: none; /* 移除模糊效果 */
+            border-radius: 15px;
+            margin-top: 80px !important;
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .jumbotron h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+            margin-bottom: 1.5rem;
+        }
+
+        .jumbotron .lead {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .jumbotron hr {
+            border-color: rgba(255, 255, 255, 0.2);
+            margin: 2rem 0;
+        }
+
+        .jumbotron p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+        }
+
+        .jumbotron .btn-primary {
+            background: linear-gradient(45deg, rgba(0, 123, 255, 0.8), rgba(0, 191, 255, 0.8));
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.2rem;
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .jumbotron .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 123, 255, 0.5);
+            background: linear-gradient(45deg, rgba(0, 123, 255, 0.9), rgba(0, 191, 255, 0.9));
+        }
+
+        /* 添加欢迎区域的动画效果 */
+        .jumbotron .animated {
+            animation: fadeInUp 1s ease;
+        }
+
+        .jumbotron .lead {
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .jumbotron hr {
+            animation: fadeIn 1s ease 0.6s both;
+        }
+
+        .jumbotron p {
+            animation: fadeInUp 1s ease 0.9s both;
+        }
+
+        .jumbotron .btn-primary {
+            animation: fadeInUp 1s ease 1.2s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* 导航链接样式 */
+        .navbar-dark .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /*搜索框*/
+        .search-form {
+            margin-left: 20px;
+        }
+
+        .search-form .input-group {
+            flex-wrap: nowrap;
+        }
+
+        .search-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 20px 0 0 20px;
+            padding: 0.5rem 1rem;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            color: white;
+            width: 250px; /* 保持输入框展开效果 */
+        }
+
+        .search-input:focus::placeholder {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-outline-light {
+            border-radius: 0 20px 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: none;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            transition: all 0.3s ease;
+            flex-shrink: 0; /* 防止按钮在空间不足时缩小 */
+            height: 42px; /* 根据padding和border，给一个固定高度，与input对齐 */
+            display: flex; /* 使用flexbox来居中图标 */
+            align-items: center; /* 垂直居中图标 */
+            justify-content: center; /* 水平居中图标 */
+        }
+
+        .btn-outline-light:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 图标 */
+        .btn-outline-light i {
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 991.98px) {
+            .search-form {
+                margin: 1rem 0;
+                width: 100%;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .search-input:focus {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- 星空背景画布 -->
+<canvas id="canvas"></canvas>
+
+<!-- 内容包装器 -->
+<div class="content-wrapper">
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">主页</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="works.html">作品展示</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="honors.html">成就荣誉</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">个人简介</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="skills.html">技能特长</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">联系方式</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="music.html">音乐播放器</a>
+                    </li>
+                </ul>
+                <!-- 搜索框 -->
+                <form class="form-inline search-form">
+                    <div class="input-group">
+                        <input type="search" class="form-control search-input" placeholder="搜索作品..." aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-light" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="mt-5 pt-5">
+        <!-- 欢迎区域 -->
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="display-4 animated">欢迎来到我的个人网站</h1>
+                <p class="lead">这里展示了我的代表作品、获得的荣誉与个人成长历程</p>
+                <hr class="my-4">
+                <p>点击下方按钮了解更多</p>
+                <a class="btn btn-primary btn-lg" href="works.html" role="button">查看作品</a>
+            </div>
+        </section>
+
+        <!-- 特色内容 -->
+        <section class="container my-5">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">最新作品</h5>
+                            <p class="card-text">展示最近完成的项目和作品，包含详细说明和技术特点。</p>
+                            <a href="works.html" class="btn btn-outline-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">荣誉成就</h5>
+                            <p class="card-text">展示获得的各类奖项和证书，记录成长历程。</p>
+                            <a href="honors.html" class="btn btn-outline-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">个人简介</h5>
+                            <p class="card-text">了解我的教育背景、技能特长和职业规划。</p>
+                            <a href="about.html" class="btn btn-outline-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container my-5">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">技能特长</h5>
+                            <p class="card-text">展示我的专业技能和特长，包括编程语言、开发工具等。</p>
+                            <a href="skills.html" class="btn btn-outline-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Bootstrap JS 依赖 -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<!-- 星空背景脚本 -->
+<script src="js/starBg.js"></script>
+</body>
+</html>
